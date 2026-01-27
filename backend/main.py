@@ -46,3 +46,16 @@ app.include_router(debts.router)
 @app.get("/")
 def read_root():
     return {"message": "Dark Riders Treasury System API is running"}
+# --- AGREGA ESTO AL FINAL DEL ARCHIVO ---
+from fastapi.staticfiles import StaticFiles
+import os
+
+# Ruta donde Docker guarda el frontend (según nuestro Dockerfile)
+frontend_path = "/app/frontend"
+
+# Verificamos si existe la carpeta (para que no falle en local)
+if os.path.exists(frontend_path):
+    # 'html=True' hace que al entrar a "/" cargue automáticamente index.html
+    app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+else:
+    print("⚠️ Corriendo en modo solo API (Frontend no encontrado)")
