@@ -1,7 +1,7 @@
 // Base API URL configuration
-const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const API_URL = isLocal ? 'http://127.0.0.1:8000' : 'https://tucodigo-backend.dokploy.app'; // ⚠️ CAMBIAR ESTO POR LA URL REAL DE TU BACKEND EN DOKPLOY
-
+//const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+//const API_URL = isLocal ? 'http://127.0.0.1:8000' : 'https://tucodigo-backend.dokploy.app'; // ⚠️ CAMBIAR ESTO POR LA URL REAL DE TU BACKEND EN DOKPLOY
+const API_URL = "";
 document.addEventListener('DOMContentLoaded', () => {
     initApp();
 });
