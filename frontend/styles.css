@@ -1,0 +1,348 @@
+:root {
+    --bg-color: #0d0d0d;
+    --card-bg: #1a1a1a;
+    --text-color: #ffffff;
+    --text-muted: #aaaaaa;
+    --accent-green: #2ecc71;
+    /* Ingresos Match */
+    --accent-red: #e74c3c;
+    /* Egresos Match */
+    --accent-purple: #8e44ad;
+    /* Action Button */
+    --accent-blue: #3498db;
+    /* Info */
+    --border-color: #333333;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding-bottom: 50px;
+}
+
+/* Custom Navbar / Toolbar */
+.toolbar {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    /* Space between Left and Right groups */
+    align-items: center;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 10px;
+}
+
+.tool-btn {
+    background-color: #333;
+    border: 1px solid #444;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tool-btn:hover {
+    background-color: #555;
+    border-color: #666;
+}
+
+.tool-btn.red {
+    background-color: #c0392b;
+    border-color: #e74c3c;
+}
+
+.tool-btn.yellow {
+    background-color: #f39c12;
+    border-color: #f1c40f;
+    color: black;
+}
+
+/* Key Icon */
+
+/* Dashboard Header */
+.dashboard-title {
+    text-align: center;
+    margin: 20px 0 30px;
+}
+
+.dashboard-title h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.user-role-badge {
+    font-size: 1rem;
+    color: var(--text-muted);
+    font-weight: normal;
+}
+
+/* Stats Cards */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 Equal columns */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: #252525;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Force Dark Backgrounds */
+.card,
+.modal-content {
+    background-color: #1a1a1a !important;
+    /* var(--card-bg) hardcoded for safety */
+    border: 1px solid #333 !important;
+    color: #fff !important;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: #333 !important;
+}
+
+.modal-title {
+    color: #fff !important;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+    /* White close button */
+}
+
+.stat-title {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.text-green {
+    color: var(--accent-green) !important;
+}
+
+.text-red {
+    color: var(--accent-red) !important;
+}
+
+.text-white {
+    color: #ffffff !important;
+}
+
+/* Action Grid */
+.actions-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    /* +NUEVO larger */
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.actions-row-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-bottom: 40px;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    background-color: var(--card-bg);
+    /* Default Dark */
+    border: 1px solid var(--border-color);
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+.btn-new {
+    background-color: var(--card-bg);
+    border: 1px solid #555;
+}
+
+/* Dark Grey as per image? Or specific? Image shows Dark Grey for +NUEVO */
+.btn-socios {
+    background-color: var(--card-bg);
+    color: var(--text-muted);
+    border: 1px solid #333;
+}
+
+.btn-morosidad {
+    background-color: #3a1c1c;
+    color: var(--accent-red);
+    border: 1px solid #5c2b2b;
+}
+
+/* Red tint */
+.btn-reports {
+    background-color: #3a1c5c;
+    color: #a569bd;
+    border: 1px solid #5b2c8c;
+}
+
+/* Purple tint logic, checking image: VER REPORTES is Purple Background */
+
+/* Correcting based on image */
+.btn-new {
+    background-color: #333;
+    border: 1px solid #444;
+}
+
+.btn-socios {
+    background-color: #222;
+    border: 1px solid #333;
+}
+
+.btn-morosidad {
+    background-color: #4a2323;
+    border: 1px solid #e74c3c;
+    color: #ffcccc;
+}
+
+/* Ver Reportes is Full Purple */
+.btn-reports {
+    background-color: #4a2394;
+    color: white;
+}
+
+/* Table Section */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.search-bar {
+    background-color: black;
+    border: 1px solid var(--border-color);
+    color: white;
+    padding: 8px;
+    width: 300px;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table th {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 15px 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.custom-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #222;
+    vertical-align: top;
+}
+
+.detail-main {
+    display: block;
+    font-weight: bold;
+    color: var(--accent-green);
+}
+
+/* Assuming Income Green */
+.detail-sub {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.badge-socio {
+    background-color: #333;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+/* Utilities */
+.d-none {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+    .stats-container,
+    .actions-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Modal Inputs Fix */
+.modal-content .form-control,
+.modal-content .form-select {
+    background-color: var(--bg-color) !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+}
+
+.modal-content .form-control:focus,
+.modal-content .form-select:focus {
+    border-color: var(--accent-green) !important;
+    box-shadow: 0 0 0 0.25rem rgba(46, 204, 113, 0.25);
+}
+
+/* Morosity View */
+.bg-warning {
+    background-color: #f39c12 !important;
+}
+
+.text-warning {
+    color: #f39c12 !important;
+}
+
+.progress {
+    background-color: #333;
+    border-radius: 2px;
+}

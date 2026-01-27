@@ -1,0 +1,37 @@
+services:
+  backend:
+    build: ./backend
+    container_name: darkriders_backend
+    # volumes:
+    #   - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=mysql+pymysql://user:password@db/darkriders
+    depends_on:
+      - db
+    networks:
+      - darkriders_net
+
+  db:
+    image: mariadb:10.6
+    container_name: darkriders_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: darkriders
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - darkriders_net
+
+networks:
+  darkriders_net:
+    driver: bridge
+
+volumes:
+  db_data:
