@@ -1,5 +1,6 @@
-// Base API URL
-const API_URL = 'http://127.0.0.1:8000'; // Force IPv4 for Windows/Docker stability
+// Base API URL configuration
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_URL = isLocal ? 'http://127.0.0.1:8000' : 'https://tucodigo-backend.dokploy.app'; // ⚠️ CAMBIAR ESTO POR LA URL REAL DE TU BACKEND EN DOKPLOY
 
 document.addEventListener('DOMContentLoaded', () => {
     initApp();
