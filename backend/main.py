@@ -4,22 +4,52 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import auth as auth_router, transactions, dashboard, users, debts
 import models, database, crud, schemas
 
-models.Base.metadata.create_all(bind=database.engine)
+import time
+from sqlalchemy.exc import OperationalError
+
+def init_db():
+    """Initializes the database with retries."""
+    max_retries = 5
+    retry_delay = 5
+    for i in range(max_retries):
+        try:
+            print(f"🔄 Intentando conectar a la base de datos (Intento {i+1}/{max_retries})...")
+            models.Base.metadata.create_all(bind=database.engine)
+            print("✅ Tablas creadas/verificadas exitosamente.")
+            return True
+        except OperationalError as e:
+            print(f"⚠️ Error de conexión: {e}")
+            if i < max_retries - 1:
+                print(f"Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+            else:
+                print("❌ No se pudo conectar a la base de datos tras varios intentos.")
+                return False
+        except Exception as e:
+            print(f"❌ Error inesperado al inicializar la BD: {e}")
+            return False
+
+# Inicialización robusta de la base de datos
+init_db()
 
 app = FastAPI(title="Dark Riders Tesorería API", version="3.0")
 
 @app.on_event("startup")
 def startup_event():
     db = database.SessionLocal()
-    user = crud.get_user_by_email(db, "admin@darkriders.com")
-    if not user:
-        crud.create_user(db, schemas.UserCreate(
-            email="admin@darkriders.com", 
-            password="admin", 
-            name="Admin Director", 
-            role="admin"
-        ))
-    db.close()
+    try:
+        user = crud.get_user_by_email(db, "admin@darkriders.com")
+        if not user:
+            crud.create_user(db, schemas.UserCreate(
+                email="admin@darkriders.com", 
+                password="admin", 
+                name="Admin Director", 
+                role="admin"
+            ))
+    except Exception as e:
+        print(f"⚠️ Error en evento startup (posiblemente BD no lista): {e}")
+    finally:
+        db.close()
 
 # CORS configuration
 origins = [
