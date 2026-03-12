@@ -1,7 +1,7 @@
 // Base API URL configuration
 const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 // In production, we'll assume the backend is on the same domain or proxied at /api
-const API_URL = isLocal ? 'http://127.0.0.1:8000' : 'http://dr-api.toxirodigital.cloud';
+const API_URL = isLocal ? 'http://127.0.0.1:8000' : 'https://dr-api.toxirodigital.cloud';
 document.addEventListener('DOMContentLoaded', () => {
     initApp();
 });
