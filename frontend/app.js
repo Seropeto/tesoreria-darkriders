@@ -322,7 +322,7 @@ async function handleLogin(e) {
         await checkUserRole(); // Update currentUser state
         showDashboard();
     } catch (err) {
-        errorDiv.textContent = `[v5] ${err.message}`;
+        errorDiv.textContent = err.message;
         errorDiv.classList.remove('d-none');
         console.error("Login Error:", err);
     }

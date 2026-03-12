@@ -47,12 +47,6 @@ def startup_event():
                 name="Admin Director", 
                 role="admin"
             ))
-        else:
-            print("Admin exists. Force resetting password to 'admin'.", flush=True)
-            user.hashed_password = crud.get_password_hash("admin")
-            db.add(user)
-            db.commit()
-            print("✅ Admin password reset to 'admin'", flush=True)
     except Exception as e:
         print(f"⚠️ Error en evento startup: {e}", flush=True)
     finally:
@@ -75,29 +69,7 @@ app.include_router(debts.router)
 
 @app.get("/")
 def read_root():
-    return {"message": "Dark Riders Treasury System API - LATEST VERSION"}
-
-@app.get("/health-db")
-def health_db():
-    db = database.SessionLocal()
-    try:
-        users = db.query(models.User).all()
-        user_list = [{"email": u.email, "role": u.role, "active": u.is_active} for u in users]
-        db_url = str(database.engine.url)
-        # Mask password in URL
-        masked_url = db_url.split(":")[0] + "://...@" + db_url.split("@")[-1] if "@" in db_url else db_url
-        return {
-            "v": "4",
-            "status": "connected",
-            "user_count": len(users),
-            "users": user_list,
-            "database_type": database.engine.name,
-            "database_url_masked": masked_url
-        }
-    except Exception as e:
-        return {"status": "error", "message": str(e)}
-    finally:
-        db.close()
+    return {"message": "Dark Riders Treasury System API is running"}
 # --- AGREGA ESTO AL FINAL DEL ARCHIVO ---
 from fastapi.staticfiles import StaticFiles
 import os

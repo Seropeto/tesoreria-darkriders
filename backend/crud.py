@@ -11,9 +11,7 @@ def get_password_hash(password):
     return pwd_context.hash(password)
 
 def verify_password(plain_password, hashed_password):
-    result = pwd_context.verify(plain_password, hashed_password)
-    print(f"DEBUG: verify_password result={result}", flush=True)
-    return result
+    return pwd_context.verify(plain_password, hashed_password)
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
