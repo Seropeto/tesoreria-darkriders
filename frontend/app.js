@@ -1,7 +1,7 @@
 // Base API URL configuration
 const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 // In production, we'll assume the backend is on the same domain or proxied at /api
-const API_URL = isLocal ? 'http://127.0.0.1:8000' : `${window.location.origin}/api`;
+const API_URL = isLocal ? 'http://127.0.0.1:8000' : 'http://dgwv6mw80k9e4uoew72v20os.72.60.248.159.sslip.io';
 document.addEventListener('DOMContentLoaded', () => {
     initApp();
 });
@@ -256,6 +256,7 @@ function calculateTotalAmount() {
 }
 
 function showLogin() {
+    document.getElementById('loading').classList.add('d-none');
     document.getElementById('app-nav').classList.add('d-none');
     const content = document.getElementById('content');
     content.classList.remove('d-none');
@@ -264,7 +265,7 @@ function showLogin() {
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card p-4 shadow-lg login-card">
                     <div class="text-center mb-4">
-                        <img src="assets/logo.jpeg" alt="Logo" width="80" height="80" class="rounded-circle mb-3 border border-secondary">
+                        <img src="logo.jpeg" alt="Logo" width="80" height="80" class="rounded-circle mb-3 border border-secondary">
                         <h3 class="fw-bold">DARK RIDERS</h3>
                         <p class="text-muted">Tesorería</p>
                     </div>
@@ -306,7 +307,14 @@ async function handleLogin(e) {
             body: formData
         });
 
-        if (!response.ok) throw new Error('Credenciales inválidas');
+        if (!response.ok) {
+            let detail = '';
+            try {
+                const errData = await response.json();
+                detail = errData.detail || '';
+            } catch(e) {}
+            throw new Error(`Error ${response.status}: ${detail || 'Credenciales inválidas'}`);
+        }
 
         const data = await response.json();
         localStorage.setItem('access_token', data.access_token);
@@ -314,8 +322,9 @@ async function handleLogin(e) {
         await checkUserRole(); // Update currentUser state
         showDashboard();
     } catch (err) {
-        errorDiv.textContent = err.message;
+        errorDiv.textContent = `[v5] ${err.message}`;
         errorDiv.classList.remove('d-none');
+        console.error("Login Error:", err);
     }
 }
 

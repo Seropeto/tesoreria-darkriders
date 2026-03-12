@@ -59,17 +59,9 @@ def startup_event():
         db.close()
 
 # CORS configuration
-origins = [
-    "http://localhost",
-    "http://localhost:8080",
-    "http://127.0.0.1:5500",
-    "http://127.0.0.1:80",
-    "*" # Allowed for all during initial VPS setup
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
