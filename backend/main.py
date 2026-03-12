@@ -13,9 +13,9 @@ def init_db():
     retry_delay = 5
     for i in range(max_retries):
         try:
-            print(f"🔄 Intentando conectar a la base de datos (Intento {i+1}/{max_retries})...")
+            print(f"🔄 Intentando conectar a la base de datos (Intento {i+1}/{max_retries})...", flush=True)
             models.Base.metadata.create_all(bind=database.engine)
-            print("✅ Tablas creadas/verificadas exitosamente.")
+            print("✅ Tablas creadas/verificadas exitosamente.", flush=True)
             return True
         except OperationalError as e:
             print(f"⚠️ Error de conexión: {e}")
@@ -47,7 +47,7 @@ def startup_event():
                 role="admin"
             ))
     except Exception as e:
-        print(f"⚠️ Error en evento startup (posiblemente BD no lista): {e}")
+        print(f"⚠️ Error en evento startup (posiblemente BD no lista): {e}", flush=True)
     finally:
         db.close()
 
@@ -77,6 +77,25 @@ app.include_router(debts.router)
 @app.get("/")
 def read_root():
     return {"message": "Dark Riders Treasury System API is running"}
+
+@app.get("/health-db")
+def health_db():
+    db = database.SessionLocal()
+    try:
+        user_count = db.query(models.User).count()
+        db_url = str(database.engine.url)
+        # Mask password in URL
+        masked_url = db_url.split(":")[0] + "://...@" + db_url.split("@")[-1] if "@" in db_url else db_url
+        return {
+            "status": "connected",
+            "user_count": user_count,
+            "database_type": database.engine.name,
+            "database_url_masked": masked_url
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+    finally:
+        db.close()
 # --- AGREGA ESTO AL FINAL DEL ARCHIVO ---
 from fastapi.staticfiles import StaticFiles
 import os
