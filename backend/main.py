@@ -82,13 +82,15 @@ def read_root():
 def health_db():
     db = database.SessionLocal()
     try:
-        user_count = db.query(models.User).count()
+        users = db.query(models.User).all()
+        user_list = [{"email": u.email, "role": u.role, "active": u.is_active} for u in users]
         db_url = str(database.engine.url)
         # Mask password in URL
         masked_url = db_url.split(":")[0] + "://...@" + db_url.split("@")[-1] if "@" in db_url else db_url
         return {
             "status": "connected",
-            "user_count": user_count,
+            "user_count": len(users),
+            "users": user_list,
             "database_type": database.engine.name,
             "database_url_masked": masked_url
         }
